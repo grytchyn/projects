@@ -1,7 +1,7 @@
 {
   "id":"./",
-  "name":"Goethe B2 — Learning Studio",
-  "short_name":"Goethe B2",
+  "name":"telc B2 Beruf — Учебный кабинет",
+  "short_name":"telc B2",
   "description":"Подготовка к B2 Beruf: задания, таймер, прогресс и материалы.",
   "start_url":"./?source=pwa#home",
   "scope":"./",
