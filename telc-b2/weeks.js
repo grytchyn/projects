@@ -4,9 +4,8 @@ window.TELC_B2_WEEKS = [
     "number": 1,
     "title": "01 · Woche 1 | 18–24 ноября — Plan & Übungen",
     "intro": [
-      "НЕДЕЛЯ 1 · 18–24 ноября",
       "Диагностика: 4 письменных ответа, 5 устных тренировок, найти 5 повторяющихся ошибок.",
-      "Ежедневно: 10–15 мин Redemittel + 10–15 мин короткий разговор с Костей. Основной источник: Alle Information от 02.11.26.pdf (указаны страницы). Предполагаемый формат — DTB B2. LexDeutsch Premium: https://www.lexdeutsch.com/b2pruefung. VHS: https://b2-beruf.vhs-lernportal.de/wws/9.php"
+      "Ежедневно: 10–15 мин Redemittel + 10–15 мин короткий разговор с Костей. Основной источник: Alle Information от 02.11.26.pdf (указаны страницы). Предполагаемый формат — DTB B2. LexDeutsch Premium: https://www.lexdeutsch.com/b2pruefung. VHS: https://b2-beruf.vhs-lernportal.de/"
     ],
     "days": [
       {
@@ -16,6 +15,15 @@ window.TELC_B2_WEEKS = [
           {
             "type": "body",
             "text": "Beschwerde: Putzdienst/Reinigung (сборник с.66). Жалоба: уборка менее 3 часов. Руководитель: выяснить причину, гарантировать соблюдение времени, дать скидку 20% на следующую Rechnung. 20 мин."
+          },
+          {
+            "type": "practice",
+            "mail": "Unser Büro wurde am Dienstag nach zwei Stunden verlassen. Vereinbart waren drei Stunden. Wie stellen Sie sicher, dass die Reinigung künftig vollständig erfolgt?",
+            "brief": "Ein Kollege hatte einen falschen Einsatzplan. Erklären Sie das, bestätigen Sie die vereinbarte Dauer und bieten Sie für die nächste Rechnung 20 Prozent Rabatt an."
+          },
+          {
+            "type": "german",
+            "text": "Sprechen: Beschreiben Sie zwei Merkmale eines guten Arbeitsumfelds. Nennen Sie ein Beispiel aus Ihrer Erfahrung."
           },
           {
             "type": "hint",
@@ -109,7 +117,7 @@ window.TELC_B2_WEEKS = [
       }
     ],
     "checkpoint": {
-      "heading": "WEEKLY CHECKPOINT / ПРОТОКОЛ",
+      "heading": "Итоги недели",
       "blocks": [
         {
           "type": "body",
@@ -125,7 +133,7 @@ window.TELC_B2_WEEKS = [
         },
         {
           "type": "body",
-          "text": "Данные вносятся в Google Sheets «10 · B2 Fortschritt». Не воспринимать образцы ответов из PDF как официальный ключ telc."
+          "text": "Запиши результаты и ошибки в учебный журнал. Образцы из сборника служат для тренировки."
         }
       ]
     },
@@ -135,10 +143,8 @@ window.TELC_B2_WEEKS = [
     "number": 2,
     "title": "02 · Woche 2 | 25 ноября – 1 декабря — Plan & Übungen",
     "intro": [
-      "НЕДЕЛЯ 2 · 25 ноября – 1 декабря",
-      "СОДЕРЖАНИЕ:  11 · ЗАДАНИЕ  ·  11 · ЗАДАНИЕ  ·  11 · ЗАДАНИЕ  ·  11 · ЗАДАНИЕ  ·  11 · ЗАДАНИЕ  ·  11 · ЗАДАНИЕ  ·  12 · ЗАДАНИЕ  ·  Контроль",
       "Автоматизация письма: 4 текста с таймером; минимум 5 устных практик; не пропускать пункты поручения.",
-      "Ежедневно: 10–15 мин Redemittel + 10–15 мин короткий разговор с Костей. Основной источник: Alle Information от 02.11.26.pdf (указаны страницы). Предполагаемый формат — DTB B2. LexDeutsch Premium: https://www.lexdeutsch.com/b2pruefung. VHS: https://b2-beruf.vhs-lernportal.de/wws/9.php"
+      "Ежедневно: 10–15 мин Redemittel + 10–15 мин короткий разговор с Костей. Основной источник: Alle Information от 02.11.26.pdf (указаны страницы). Предполагаемый формат — DTB B2. LexDeutsch Premium: https://www.lexdeutsch.com/b2pruefung. VHS: https://b2-beruf.vhs-lernportal.de/"
     ],
     "days": [
       {
@@ -148,6 +154,11 @@ window.TELC_B2_WEEKS = [
           {
             "type": "body",
             "text": "Beschwerde: falsche Rechnung (с.74–75) — компьютерный сбой, исправленный счёт и договорная скидка. 20 мин. Sprechen Teil1A «Bewerbungsgespräch» (с.181), 2 мин."
+          },
+          {
+            "type": "practice",
+            "mail": "In der Rechnung für unsere Bestellung fehlt der vereinbarte Rabatt. Bitte prüfen Sie den Betrag, bevor wir die Rechnung bezahlen.",
+            "brief": "Beim Softwarewechsel wurde der Rabatt von zehn Prozent nicht übernommen. Entschuldigen Sie sich, erklären Sie den Fehler und kündigen Sie die korrigierte Rechnung für morgen an."
           },
           {
             "type": "hint",
@@ -241,7 +252,7 @@ window.TELC_B2_WEEKS = [
       }
     ],
     "checkpoint": {
-      "heading": "WEEKLY CHECKPOINT / ПРОТОКОЛ",
+      "heading": "Итоги недели",
       "blocks": [
         {
           "type": "body",
@@ -257,7 +268,7 @@ window.TELC_B2_WEEKS = [
         },
         {
           "type": "body",
-          "text": "Данные вносятся в Google Sheets «10 · B2 Fortschritt». Не воспринимать образцы ответов из PDF как официальный ключ telc."
+          "text": "Запиши результаты и ошибки в учебный журнал. Образцы из сборника служат для тренировки."
         }
       ]
     },
@@ -267,10 +278,8 @@ window.TELC_B2_WEEKS = [
     "number": 3,
     "title": "03 · Woche 3 | 2–8 декабря — Plan & Übungen",
     "intro": [
-      "НЕДЕЛЯ 3 · 2–8 декабря",
-      "СОДЕРЖАНИЕ:  12 · ЗАДАНИЕ  ·  12 · ЗАДАНИЕ  ·  12 · ЗАДАНИЕ  ·  12 · ЗАДАНИЕ  ·  12 · ЗАДАНИЕ  ·  12 · ЗАДАНИЕ  ·  12 · ЗАДАНИЕ  ·  Контроль",
       "Скорость и гибкость: письмо по изменённым вариантам, реакция на неожиданное содержание, первый комплексный пробник.",
-      "Ежедневно: 10–15 мин Redemittel + 10–15 мин короткий разговор с Костей. Основной источник: Alle Information от 02.11.26.pdf (указаны страницы). Предполагаемый формат — DTB B2. LexDeutsch Premium: https://www.lexdeutsch.com/b2pruefung. VHS: https://b2-beruf.vhs-lernportal.de/wws/9.php"
+      "Ежедневно: 10–15 мин Redemittel + 10–15 мин короткий разговор с Костей. Основной источник: Alle Information от 02.11.26.pdf (указаны страницы). Предполагаемый формат — DTB B2. LexDeutsch Premium: https://www.lexdeutsch.com/b2pruefung. VHS: https://b2-beruf.vhs-lernportal.de/"
     ],
     "days": [
       {
@@ -280,6 +289,11 @@ window.TELC_B2_WEEKS = [
           {
             "type": "body",
             "text": "Beschwerde: Drucker/Kopierer (с.72–73) — неисправность после нескольких вызовов; начальник утверждает ошибку эксплуатации, предлагает бесплатный инструктаж, но проверку оплачивает клиент. 20 мин."
+          },
+          {
+            "type": "practice",
+            "mail": "Unser Kopierer zeigt wieder eine Störung an. Ihr Techniker war schon zweimal hier. Wir erwarten eine Lösung und möchten wissen, wer die Prüfung bezahlt.",
+            "brief": "Laut Techniker wurde das Papierfach falsch eingesetzt. Erklären Sie das höflich. Bieten Sie eine kostenlose Einweisung an. Die Prüfung ist laut Vertrag kostenpflichtig."
           },
           {
             "type": "hint",
@@ -373,7 +387,7 @@ window.TELC_B2_WEEKS = [
       }
     ],
     "checkpoint": {
-      "heading": "WEEKLY CHECKPOINT / ПРОТОКОЛ",
+      "heading": "Итоги недели",
       "blocks": [
         {
           "type": "body",
@@ -389,7 +403,7 @@ window.TELC_B2_WEEKS = [
         },
         {
           "type": "body",
-          "text": "Данные вносятся в Google Sheets «10 · B2 Fortschritt». Не воспринимать образцы ответов из PDF как официальный ключ telc."
+          "text": "Запиши результаты и ошибки в учебный журнал. Образцы из сборника служат для тренировки."
         }
       ]
     },
@@ -399,8 +413,6 @@ window.TELC_B2_WEEKS = [
     "number": 4,
     "title": "04 · Woche 4 | 9–15 декабря — Plan & Übungen",
     "intro": [
-      "WOCHE 4 / 9–15 декабря",
-      "СОДЕРЖАНИЕ:  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  Контроль",
       "Пробники с новыми условиями. Оценивать качество по официальным критериям, а не по сходству с готовым ответом.",
       "Основные ресурсы: PDF «Alle Information от 02.11.26», LexDeutsch Premium https://www.lexdeutsch.com/b2pruefung, официальный пробник telc https://www.telc.net/sprachpruefungen/deutsch/dtb-deutsch-test-fuer-den-beruf/deutsch-test-fuer-den-beruf-b2/"
     ],
@@ -412,6 +424,11 @@ window.TELC_B2_WEEKS = [
           {
             "type": "body",
             "text": "Beschwerde: Umzug (PDF с.71). Клиент сообщает о проблемах перевозки и задержках. Сначала выпиши 3–4 требования служебной записки — они различаются по вариантам. Письмо 20 минут."
+          },
+          {
+            "type": "practice",
+            "mail": "Beim Umzug kamen die Möbel zwei Stunden später als vereinbart. Außerdem hat unser Empfangstisch einen Kratzer. Wie geht es jetzt weiter?",
+            "brief": "Ein Fahrzeug ist ausgefallen. Erklären Sie die Verspätung, bitten Sie um ein Foto des Schadens und sagen Sie eine Rückmeldung bis Freitag zu."
           },
           {
             "type": "hint",
@@ -505,7 +522,7 @@ window.TELC_B2_WEEKS = [
       }
     ],
     "checkpoint": {
-      "heading": "CHECKPOINT / САМООЦЕНКА",
+      "heading": "Итоги недели",
       "blocks": [
         {
           "type": "body",
@@ -519,8 +536,6 @@ window.TELC_B2_WEEKS = [
     "number": 5,
     "title": "05 · Woche 5 | 16–20 декабря — Plan & Übungen",
     "intro": [
-      "WOCHE 5 / 16–20 декабря",
-      "СОДЕРЖАНИЕ:  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  12 · УПРАЖНЕНИЯ  ·  Контроль",
       "Финальное закрепление без перегруза, закрепить реакцию на неожиданную формулировку и все восемь тем Teil1A.",
       "Основные ресурсы: PDF «Alle Information от 02.11.26», LexDeutsch Premium https://www.lexdeutsch.com/b2pruefung, официальный пробник telc https://www.telc.net/sprachpruefungen/deutsch/dtb-deutsch-test-fuer-den-beruf/deutsch-test-fuer-den-beruf-b2/"
     ],
@@ -532,6 +547,11 @@ window.TELC_B2_WEEKS = [
           {
             "type": "body",
             "text": "Beschwerde: Pflanzenlieferung (с.77). Флористическая поставка не соответствует ожиданиям; начальник просит сохранить клиента, предложить будущие условия и компенсацию согласно записке. 20 мин."
+          },
+          {
+            "type": "practice",
+            "mail": "Für unseren Empfang haben wir regionale Pflanzen bestellt. Geliefert wurden Orchideen. Am Freitag findet bei uns eine Veranstaltung statt. Was schlagen Sie vor?",
+            "brief": "Bieten Sie den Austausch am Donnerstag ohne Lieferkosten an. Bitten Sie um eine passende Uhrzeit und bestätigen Sie, dass die nächste Bestellung vor dem Versand geprüft wird."
           },
           {
             "type": "hint",
@@ -611,7 +631,7 @@ window.TELC_B2_WEEKS = [
       }
     ],
     "checkpoint": {
-      "heading": "CHECKPOINT / САМООЦЕНКА",
+      "heading": "Итоги недели",
       "blocks": [
         {
           "type": "body",
