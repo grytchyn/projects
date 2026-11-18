@@ -8,7 +8,7 @@
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=5">
   <title>telc B2 Beruf · Учебный кабинет</title>
 </head>
 <body>
@@ -60,14 +60,18 @@
     </aside>
     <div class="workspace">
       <header class="topbar">
-        <div class="breadcrumbs"><span class="crumb-muted">TELC / B2 BERUF</span><span class="crumb-divider">/</span><strong id="current-section">Главная</strong></div>
+        <div class="breadcrumbs"><span class="crumb-muted">telc B2 Beruf</span><span class="crumb-divider">/</span><strong id="current-section">Главная</strong></div>
         <div class="top-actions">
           <span class="top-label" id="today-date"></span>
           <button type="button" id="theme-switch" class="icon-btn" aria-label="Переключить светлую и тёмную тему" title="Сменить тему"><svg class="ico"><use href="#i-moon"/></svg></button>
           <span class="user-avatar" aria-label="Учебный профиль Насти">A</span>
         </div>
       </header>
-      <main id="app-main" tabindex="-1" aria-live="polite"></main>
+      <div id="storage-notice" class="storage-notice" role="status" hidden><span></span>
+        <button type="button" class="btn btn-secondary" data-action="retry">Повторить сохранение</button>
+        <button type="button" class="btn btn-secondary" data-action="raw" hidden>Скачать исходные данные</button>
+      </div>
+      <main id="app-main" tabindex="-1"></main>
       <footer class="main-footer">Личный тренажёр для telc B2 Beruf · Без рекламы, аналитики и сервера. <span>Данные только в вашем браузере.</span></footer>
     </div>
   </div>
@@ -81,9 +85,10 @@
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <input id="restore-input" type="file" accept="application/json,.json" hidden>
   <noscript><div class="noscript">Для чек-листов и прогресса необходимо включить JavaScript. Ссылки на документы доступны в Google Диске.</div></noscript>
-  <script src="./data.js" defer></script>
-  <script src="./weeks.js" defer></script>
-  <script src="./extra.js" defer></script>
-  <script src="./app.js" defer></script>
+  <script src="./data.js?v=5" defer></script>
+  <script src="./weeks.js?v=5" defer></script>
+  <script src="./extra.js?v=5" defer></script>
+  <script src="./progress-store.js?v=5" defer></script>
+  <script src="./app.js?v=5" defer></script>
 </body>
 </html>

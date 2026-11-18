@@ -19,7 +19,8 @@ window.TELC_B2_DATA = Object.freeze({
     lexForum: 'https://www.lexdeutsch.com/b2pruefung/schreiben/forumsbeitrag',
     lexComplaint: 'https://www.lexdeutsch.com/b2pruefung/schreiben/beschwerde',
     lexSpeak: 'https://www.lexdeutsch.com/b2pruefung/sprechen/teil1',
-    vhs: 'https://b2-beruf.vhs-lernportal.de/wws/9.php',
+    vhs: 'https://b2-beruf.vhs-lernportal.de/',
+    model: 'https://www.bamf.de/SharedDocs/Anlagen/DE/Integration/Berufsbezsprachf-ESF-BAMF/BSK-Konzepte/b2-modelltest-bsk.pdf?__blob=publicationFile&v=10',
     telc: 'https://www.telc.net/sprachpruefungen/deutsch/dtb-deutsch-test-fuer-den-beruf/deutsch-test-fuer-den-beruf-b2/'
   },
   weeks: [

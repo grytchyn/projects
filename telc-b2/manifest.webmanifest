@@ -1,7 +1,7 @@
 {
   "id":"./",
   "name":"telc B2 Beruf — Учебный кабинет",
-  "short_name":"telc B2",
+  "short_name":"telc B2 Beruf",
   "description":"Подготовка к B2 Beruf: задания, таймер, прогресс и материалы.",
   "start_url":"./?source=pwa#home",
   "scope":"./",
