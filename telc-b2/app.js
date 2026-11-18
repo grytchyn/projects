@@ -81,8 +81,8 @@
       ['edit','Schreiben','Письма и форум',DATA.links.writing],
       ['mic','Sprechen','Монолог и диалоги',DATA.links.speaking],
       ['book','LexDeutsch','Премиум-тренажёр',DATA.links.lex],
-      ['chart','Google Sheets','Баллы и журнал ошибок',DATA.links.tracking]
-    ].map(([ic,name,desc,url])=>`<a class="quick-card" href="${url}" target="_blank" rel="noopener noreferrer"><div class="quick-head">${icon(ic,'icon-lg')}${icon('arrow','icon-xs')}</div><strong>${name}</strong><span>${desc}</span></a>`).join('');
+      ['chart','Журнал','Баллы и анализ ошибок','#progress']
+    ].map(([ic,name,desc,url])=>`<a class="quick-card" href="${url}" ${url.startsWith("#")?"":'target="_blank" rel="noopener noreferrer"'}><div class="quick-head">${icon(ic,'icon-lg')}${icon('arrow','icon-xs')}</div><strong>${name}</strong><span>${desc}</span></a>`).join('');
     const perWeek=DATA.weeks.map(w=>{const m=taskStats(w.id);return `<div class="week-mini-row"><strong>${String(w.id).padStart(2,'0')}</strong>${progressBar(m.percent)}<span>${m.done}/${m.total}</span></div>`}).join('');
     return `${header('ЛИЧНЫЙ КАБИНЕТ','Guten Tag, Настя.','Меньше поиска, больше практики. Все задания и материалы — в одном месте.')}
       <section class="hero" aria-labelledby="hero-title"><div><div class="hero-label">ТВОЙ ЭКЗАМЕН · telc B2 Beruf</div><h2 id="hero-title">${title}</h2><p>${subtitle}</p><div class="hero-actions"><a href="#plan" class="btn">${icon('calendar')} План на сегодня</a><a href="#practice" class="btn btn-hero-quiet">${icon('clock')} Начать тренировку</a></div></div><div class="countdown" aria-label="${Math.max(left,0)} календарных дней до экзамена" style="background:conic-gradient(#b6e7ca ${Math.min(100,Math.max(0,Math.round((34-Math.max(0,left))/34*100)))}%,rgba(255,255,255,.15) 0)"><div class="countdown-inner"><span class="countdown-num">${Math.max(left,0)}</span><span class="countdown-caption">дней</span></div></div></section>
@@ -105,7 +105,7 @@
   function renderPlan() {
     const w=DATA.weeks[ui.week-1],tasks=DATA.tasks.filter(t=>t.week===ui.week),m=taskStats(ui.week);
     const menu=DATA.weeks.map(x=>`<button class="week-tab ${ui.week===x.id?'active':''}" data-week="${x.id}" aria-pressed="${ui.week===x.id}">${String(x.id).padStart(2,'0')} · ${e(x.short)}</button>`).join('');
-    return `${header('33 ДНЯ · 5 ЭТАПОВ','План обучения','Выбирай неделю, выполняй задания с таймером и отмечай этапы. Все пункты взяты из вашей таблицы Google Sheets.',ext(DATA.links.tracking,'Google Sheets'))}
+    return `${header('33 ДНЯ · 5 ЭТАПОВ','План обучения','Выбирай неделю, выполняй задания с таймером и отмечай этапы. Все пункты взяты из вашей таблицы Google Sheets.','<a class="btn btn-secondary" href="#progress">Журнал на сайте</a>')}
       <div class="week-picker" role="group" aria-label="Выбрать неделю">${menu}</div>
       <section class="panel panel-pad"><div class="week-summary"><div><span class="badge">НЕДЕЛЯ ${w.id}</span><h2 style="font-size:22px;letter-spacing:-.03em;margin:10px 0 3px">${e(w.focus)}</h2><p>${e(w.label)} · ${e(w.goal)}</p></div><div class="week-progress"><div style="display:flex;justify-content:space-between;font-size:12px;margin:0 0 9px"><strong>Выполнено</strong><span>${m.done} / ${m.total}</span></div>${progressBar(m.percent)}</div></div><div class="task-list">${tasks.map(renderTask).join('')}</div><aside class="checkpoint"><strong>${icon('check','icon-xs')} Чекпоинт недели</strong><p>${e(w.checkpoint)}</p><a class="btn btn-secondary btn-sm" href="#week?num=${w.id}">Полный план на сайте →</a></aside></section>`;
   }
