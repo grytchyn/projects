@@ -1,10 +1,11 @@
-// Source: the user's Goethe B2 Google Sheets "Aufgabenplan" and "Wochencheck",
+// Source: the user's B2 Beruf Google Sheets "Aufgabenplan" and "Wochencheck",
 // retrieved on 2026-11-17. Links point to the verified native Google documents.
-window.GOETHE_DATA = Object.freeze({
+window.TELC_B2_DATA = Object.freeze({
   examDate: '2026-12-21',
-  examName: 'Deutsch-Test für den Beruf B2',
+  examName: 'telc B2 Beruf',
   context: 'Berlitz · дата 21 декабря 2026',
-  storageKey: 'goethe-b2-anastasiia-v1',
+  storageKey: 'telc-b2-anastasiia-v1',
+  legacyStorageKey: 'goethe-b2-anastasiia-v1', // compatibility with prior progress
   links: {
     homeDoc: 'https://docs.google.com/document/d/1d7wwgilMh0zUI5Uungw01CntWSt_fNYyIqpS7twbtp0/edit',
     writing: 'https://docs.google.com/document/d/1xyoYBz-3TWS-BS6z8-x6z8ofvcxAyP9vCuSH4V4K_Ls/edit',
