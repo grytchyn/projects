@@ -1,25 +1,28 @@
-/* Goethe B2 Learning Studio
+/* telc B2 Beruf Learning Studio
    Standalone, dependency-free, local-first personal study dashboard.
    No credentials, analytics, external scripts or backend. */
 (() => {
   'use strict';
-  const DATA = window.GOETHE_DATA;
+  const DATA = window.TELC_B2_DATA;
   if (!DATA) throw new Error('Study plan data missing');
   const MAIN = document.getElementById('app-main');
   const STORAGE = DATA.storageKey;
-  const DEFAULT = { version: 1, tasks: {}, notes: {}, scores: {}, learned: [], theme: 'light', updatedAt: '' };
+  const DEFAULT = { version: 1, tasks: {}, notes: {}, minutes: {}, errors: {}, scores: {}, learned: [], theme: 'light', updatedAt: '' };
   let state = load();
-  const ui = { week: chooseCurrentWeek(), phrase: 0, reveal: false, openNotes: new Set() };
+  const ui = { week: chooseCurrentWeek(), reportWeek: String(chooseCurrentWeek()), phrase: 0, reveal: false, openNotes: new Set() };
   const timer = { preset: 120, remaining: 120, running: false, deadline: 0, interval: null };
 
   function load() {
     try {
-      const raw = localStorage.getItem(STORAGE);
+      const raw = localStorage.getItem(STORAGE) || localStorage.getItem(DATA.legacyStorageKey);
+      if (raw && !localStorage.getItem(STORAGE)) localStorage.setItem(STORAGE, raw);
       if (!raw) return structuredClone(DEFAULT);
       const v = JSON.parse(raw);
       if (!v || v.version !== 1 || typeof v !== 'object') return structuredClone(DEFAULT);
       return { ...structuredClone(DEFAULT), ...v, tasks: v.tasks && typeof v.tasks === 'object' ? v.tasks : {},
         notes: v.notes && typeof v.notes === 'object' ? v.notes : {},
+        minutes: v.minutes && typeof v.minutes === 'object' ? v.minutes : {},
+        errors: v.errors && typeof v.errors === 'object' ? v.errors : {},
         scores: v.scores && typeof v.scores === 'object' ? v.scores : {},
         learned: Array.isArray(v.learned) ? v.learned : [] };
     } catch { return structuredClone(DEFAULT); }
@@ -72,7 +75,7 @@
     const stats=taskStats();const left=daysLeft();const t=nextTask();
     const title=left>0?`До экзамена ${left} ${plural(left,'день','дня','дней')}`:left===0?'Сегодня экзамен B2':'Экзамен по плану уже прошёл';
     const subtitle=left>0?'21 декабря 2026 · Berlitz. Фокус на Schreiben и Sprechen.':'Вся подготовка и записи остаются доступны.';
-    const next=t?`<article class="task-compact"><div class="task-compact-heading"><span class="badge">${t.id===todayBerlin()?'СЕГОДНЯ':t.id>todayBerlin()?'СЛЕДУЮЩЕЕ ЗАДАНИЕ':'НЕЗАВЕРШЕНО'}</span><span class="badge badge-neutral">${shortDate(t.id)}</span></div><h3>${e(t.title)}</h3><p>${e(t.detail)}</p><div class="task-actions"><a href="#plan?week=${t.week}&task=${t.id}" class="btn btn-sm">${icon('calendar')} К заданию</a>${ext(weekForTask(t).link,'План недели','btn btn-quiet btn-sm')}</div></article>`
+    const next=t?`<article class="task-compact"><div class="task-compact-heading"><span class="badge">${t.id===todayBerlin()?'СЕГОДНЯ':t.id>todayBerlin()?'СЛЕДУЮЩЕЕ ЗАДАНИЕ':'НЕЗАВЕРШЕНО'}</span><span class="badge badge-neutral">${shortDate(t.id)}</span></div><h3>${e(t.title)}</h3><p>${e(t.detail)}</p><div class="task-actions"><a href="#plan?week=${t.week}&task=${t.id}" class="btn btn-sm">${icon('calendar')} К заданию</a><a href="#week?num=${t.week}&day=${t.id}" class="btn btn-quiet btn-sm">Текст задания</a></div></article>`
       :`<article class="task-compact"><span class="badge">ВСЕ ЗАДАНИЯ ОТМЕЧЕНЫ</span><h3>33 из 33 ✓</h3><p>Теперь можно повторять слабые темы и проверять результат пробниками.</p></article>`;
     const quick = [
       ['edit','Schreiben','Письма и форум',DATA.links.writing],
@@ -82,7 +85,7 @@
     ].map(([ic,name,desc,url])=>`<a class="quick-card" href="${url}" target="_blank" rel="noopener noreferrer"><div class="quick-head">${icon(ic,'icon-lg')}${icon('arrow','icon-xs')}</div><strong>${name}</strong><span>${desc}</span></a>`).join('');
     const perWeek=DATA.weeks.map(w=>{const m=taskStats(w.id);return `<div class="week-mini-row"><strong>${String(w.id).padStart(2,'0')}</strong>${progressBar(m.percent)}<span>${m.done}/${m.total}</span></div>`}).join('');
     return `${header('ЛИЧНЫЙ КАБИНЕТ','Guten Tag, Настя.','Меньше поиска, больше практики. Все задания и материалы — в одном месте.')}
-      <section class="hero" aria-labelledby="hero-title"><div><div class="hero-label">ТВОЙ ЭКЗАМЕН · DTB B2</div><h2 id="hero-title">${title}</h2><p>${subtitle}</p><div class="hero-actions"><a href="#plan" class="btn">${icon('calendar')} План на сегодня</a><a href="#practice" class="btn btn-hero-quiet">${icon('clock')} Начать тренировку</a></div></div><div class="countdown" aria-label="${Math.max(left,0)} календарных дней до экзамена" style="background:conic-gradient(#b6e7ca ${Math.min(100,Math.max(0,Math.round((34-Math.max(0,left))/34*100)))}%,rgba(255,255,255,.15) 0)"><div class="countdown-inner"><span class="countdown-num">${Math.max(left,0)}</span><span class="countdown-caption">дней</span></div></div></section>
+      <section class="hero" aria-labelledby="hero-title"><div><div class="hero-label">ТВОЙ ЭКЗАМЕН · telc B2 Beruf</div><h2 id="hero-title">${title}</h2><p>${subtitle}</p><div class="hero-actions"><a href="#plan" class="btn">${icon('calendar')} План на сегодня</a><a href="#practice" class="btn btn-hero-quiet">${icon('clock')} Начать тренировку</a></div></div><div class="countdown" aria-label="${Math.max(left,0)} календарных дней до экзамена" style="background:conic-gradient(#b6e7ca ${Math.min(100,Math.max(0,Math.round((34-Math.max(0,left))/34*100)))}%,rgba(255,255,255,.15) 0)"><div class="countdown-inner"><span class="countdown-num">${Math.max(left,0)}</span><span class="countdown-caption">дней</span></div></div></section>
       <div class="home-grid"><div class="stack"><section class="panel panel-pad">${sectionHead('Твоя следующая тренировка','<a class="text-link" href="#plan">Все 33 дня →</a>')}${next}</section>
       <section class="panel panel-pad">${sectionHead('Маршрут из пяти недель','<a class="text-link" href="#plan">Открыть план →</a>')}<div class="progress-line"><div class="small-ring" style="background:conic-gradient(var(--accent) ${stats.percent}%,var(--panel-soft) 0)"><span>${stats.percent}%</span></div><div><strong style="font-size:15px">${stats.done} из ${stats.total} заданий</strong><p style="font-size:12px;color:var(--muted);margin:5px 0">Отмечено как «сделано». Проверка и повтор считаются отдельно.</p></div></div><div class="week-mini">${perWeek}</div></section></div>
       <div class="stack"><section class="panel panel-pad">${sectionHead('Открыть и учиться')}<div class="quick-grid">${quick}</div></section>
@@ -95,7 +98,7 @@
     return `<article class="task-card ${s.done?'task-card-completed':''}" id="day-${t.id}">
       <div class="task-top"><span class="task-date">${e(shortDate(t.id).toUpperCase())}</span><span class="task-kind">${e(t.kind)}</span></div>
       <h3>${e(t.title)}</h3><p class="desc">${e(t.detail)}</p>
-      <div class="task-foot"><div class="task-sources">${icon('book','icon-xs')} <span>${isCheckpoint?'Контрольный день':`PDF: стр. ${e(t.pages)}`}</span><span>·</span>${icon('clock','icon-xs')}<span>${t.duration} мин</span></div><a class="text-link" target="_blank" rel="noopener noreferrer" href="${e(w.link)}">Инструкция ${icon('arrow','icon-xs')}</a></div>
+      <div class="task-foot"><div class="task-sources">${icon('book','icon-xs')} <span>${isCheckpoint?'Контрольный день':`PDF: стр. ${e(t.pages)}`}</span><span>·</span>${icon('clock','icon-xs')}<span>${t.duration} мин</span></div><a class="text-link" target="_blank" rel="noopener noreferrer" href="#week?num=${w.id}&day=${t.id}">Полное задание ${icon('arrow','icon-xs')}</a></div>
       <div class="mini-checks">${stageControl(t,'done','Сделано')}${stageControl(t,'checked','Проверено')}${stageControl(t,'repeated','Повторено')}<button class="notes-toggle" type="button" data-notes-toggle="${t.id}" aria-expanded="${ui.openNotes.has(t.id)}">${icon('edit','icon-xs')} Заметка</button></div>
       <div class="task-note ${ui.openNotes.has(t.id)?'open':''}" id="note-${t.id}"><textarea data-note="${t.id}" aria-label="Заметки по задаче ${e(t.title)}" maxlength="3000" placeholder="Ошибки, полезные слова, что повторить завтра…">${e(note)}</textarea><small>Сохраняется в этом браузере автоматически.</small></div></article>`;
   }
@@ -104,8 +107,11 @@
     const menu=DATA.weeks.map(x=>`<button class="week-tab ${ui.week===x.id?'active':''}" data-week="${x.id}" aria-pressed="${ui.week===x.id}">${String(x.id).padStart(2,'0')} · ${e(x.short)}</button>`).join('');
     return `${header('33 ДНЯ · 5 ЭТАПОВ','План обучения','Выбирай неделю, выполняй задания с таймером и отмечай этапы. Все пункты взяты из вашей таблицы Google Sheets.',ext(DATA.links.tracking,'Google Sheets'))}
       <div class="week-picker" role="group" aria-label="Выбрать неделю">${menu}</div>
-      <section class="panel panel-pad"><div class="week-summary"><div><span class="badge">НЕДЕЛЯ ${w.id}</span><h2 style="font-size:22px;letter-spacing:-.03em;margin:10px 0 3px">${e(w.focus)}</h2><p>${e(w.label)} · ${e(w.goal)}</p></div><div class="week-progress"><div style="display:flex;justify-content:space-between;font-size:12px;margin:0 0 9px"><strong>Выполнено</strong><span>${m.done} / ${m.total}</span></div>${progressBar(m.percent)}</div></div><div class="task-list">${tasks.map(renderTask).join('')}</div><aside class="checkpoint"><strong>${icon('check','icon-xs')} Чекпоинт недели</strong><p>${e(w.checkpoint)}</p>${ext(w.link,'Открыть полный план недели','btn btn-secondary btn-sm')}</aside></section>`;
+      <section class="panel panel-pad"><div class="week-summary"><div><span class="badge">НЕДЕЛЯ ${w.id}</span><h2 style="font-size:22px;letter-spacing:-.03em;margin:10px 0 3px">${e(w.focus)}</h2><p>${e(w.label)} · ${e(w.goal)}</p></div><div class="week-progress"><div style="display:flex;justify-content:space-between;font-size:12px;margin:0 0 9px"><strong>Выполнено</strong><span>${m.done} / ${m.total}</span></div>${progressBar(m.percent)}</div></div><div class="task-list">${tasks.map(renderTask).join('')}</div><aside class="checkpoint"><strong>${icon('check','icon-xs')} Чекпоинт недели</strong><p>${e(w.checkpoint)}</p><a class="btn btn-secondary btn-sm" href="#week?num=${w.id}">Полный план на сайте →</a></aside></section>`;
   }
+  function renderWeek(){return window.TELC_B2_EXTRA.renderWeek({DATA,ui,state,header,progressBar,taskStats,stageControl,shortDate,ext,params:routeInfo().params});}
+  function renderJournal(){return window.TELC_B2_EXTRA.renderJournal({DATA,ui,state,stageControl});}
+  function exportCSV(){window.TELC_B2_EXTRA.exportCSV(DATA,state,tstate,todayBerlin);toast('CSV сохранён');}
   function renderPractice() {
     const phrase=DATA.phrases[ui.phrase%DATA.phrases.length];const learned=state.learned.includes(ui.phrase);
     return `${header('SCHREIBEN + SPRECHEN','Практика B2','Работаем именно с двумя приоритетными навыками. Пиши собственные тексты и тренируй устную реакцию.',ext(DATA.links.lex,'LexDeutsch Premium'))}
@@ -141,7 +147,7 @@
     <div class="progress-layout"><div class="stack"><section class="panel panel-pad">${sectionHead('Прогресс по неделям')}<div>${w}</div><a class="text-link" href="#plan">Перейти к заданиям ${icon('chevron','icon-xs')}</a></section>
     <section class="panel panel-pad">${sectionHead('Баллы пробного экзамена','<span class="badge badge-neutral">Тренировка</span>')}<div class="score-grid">${inp}</div><p class="score-meta">Цель: L ≥42 · H ≥42 · Sch ≥42–45 · Spr ≥45. Предварительная оценка, не официальный результат.</p><div id="score-result">${scoreResultHTML()}</div></section></div>
     <div class="stack"><section class="panel panel-pad">${sectionHead('Резервная копия',`<span class="badge badge-neutral">${icon('shield','icon-xs')} Local-first</span>`)}<p class="section-note" style="line-height:1.7;margin:0 0 15px">Данные не уходят на сервер. Экспортируй JSON после каждой недели, чтобы сохранить отметки и заметки.</p><div class="backup-actions"><button class="btn btn-secondary btn-sm" data-action="export">${icon('download')} Скачать JSON</button><button class="btn btn-quiet btn-sm" data-action="import">${icon('upload')} Восстановить</button></div><p class="backup-note">На другом устройстве прогресс появится только после ручного импорта файла. Google Sheets автоматически не обновляется.</p><div class="danger-zone"><button class="btn btn-danger btn-sm" data-action="erase">Сбросить данные на этом устройстве</button></div></section>
-    <section class="panel panel-pad">${sectionHead('Как оценивать честно')}<p class="section-note" style="line-height:1.7;margin:0 0 13px">Минимальный суммарный результат DTB B2 — 144/240, но дополнительно нужны три части не ниже 36/60 и четвёртая не ниже 24/60. Не заполняй Schreiben/Sprechen произвольной оценкой — лучше по проверке преподавателя.</p>${ext(DATA.links.exam,'Открыть регламент','text-link')}</section></div></div>`;
+    <section class="panel panel-pad">${sectionHead('Как оценивать честно')}<p class="section-note" style="line-height:1.7;margin:0 0 13px">Минимальный суммарный результат DTB B2 — 144/240, но дополнительно нужны три части не ниже 36/60 и четвёртая не ниже 24/60. Не заполняй Schreiben/Sprechen произвольной оценкой — лучше по проверке преподавателя.</p>${ext(DATA.links.exam,'Открыть регламент','text-link')}</section></div></div>${renderJournal()}`;
   }
   function scoreResultHTML() {
     const v=['lesen','hoeren','schreiben','sprechen'].map(k=>state.scores[k]);
@@ -157,15 +163,16 @@
   function timerToggle(){if(timer.running){timerUpdate();timerPause();}else{if(timer.remaining===0)timer.remaining=timer.preset;timer.deadline=Date.now()+timer.remaining*1000;timer.running=true;timer.interval=setInterval(timerUpdate,250);}timerUpdate();}
   function timerReset(){timerPause();timer.remaining=timer.preset;timerUpdate();}
 
-  function routeInfo(){const raw=(location.hash||'#home').replace(/^#/,'');const [name,query='']=raw.split('?');const route=['home','plan','practice','library','progress'].includes(name)?name:'home';const params=new URLSearchParams(query);return{route,params};}
+  function routeInfo(){const raw=(location.hash||'#home').replace(/^#/,'');const [name,query='']=raw.split('?');const route=['home','plan','week','practice','library','progress'].includes(name)?name:'home';const params=new URLSearchParams(query);return{route,params};}
   function render(resetScroll=true){
     const {route,params}=routeInfo();
     if(route==='plan'){const n=Number(params.get('week'));if(n>=1&&n<=5)ui.week=n;}
-    MAIN.innerHTML=({home:renderHome,plan:renderPlan,practice:renderPractice,library:renderLibrary,progress:renderProgress}[route])();
-    for(const link of document.querySelectorAll('[data-nav]')){const yes=link.dataset.nav===route;link.classList.toggle('active',yes);if(yes)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');}
-    document.getElementById('current-section').textContent={home:'Главная',plan:'План обучения',practice:'Практика B2',library:'Библиотека',progress:'Мой прогресс'}[route];
-    document.title={home:'Главная',plan:'План',practice:'Практика',library:'Библиотека',progress:'Прогресс'}[route]+' · Goethe B2';
-    if(resetScroll){window.scrollTo({top:0,behavior:'instant'});if(params.get('task')&&route==='plan'){setTimeout(()=>document.getElementById('day-'+params.get('task'))?.scrollIntoView({behavior:'smooth',block:'center'}),70);}}
+    if(route==='week'){const n=Number(params.get('num'));if(n>=1&&n<=5)ui.week=n;}
+    MAIN.innerHTML=({home:renderHome,plan:renderPlan,week:renderWeek,practice:renderPractice,library:renderLibrary,progress:renderProgress}[route])();
+    for(const link of document.querySelectorAll('[data-nav]')){const yes=link.dataset.nav===(route==='week'?'plan':route);link.classList.toggle('active',yes);if(yes)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');}
+    document.getElementById('current-section').textContent={home:'Главная',plan:'План обучения',week:'Неделя '+ui.week,practice:'Практика B2',library:'Библиотека',progress:'Мой прогресс'}[route];
+    document.title={home:'Главная',plan:'План',week:'Неделя '+ui.week,practice:'Практика',library:'Библиотека',progress:'Прогресс'}[route]+' · telc B2 Beruf';
+    if(resetScroll){window.scrollTo({top:0,behavior:'instant'});if((params.get('task')&&route==='plan')||(params.get('day')&&route==='week')){setTimeout(()=>document.getElementById('day-'+(params.get('task')||params.get('day')))?.scrollIntoView({behavior:'smooth',block:'center'}),70);}}
     if(route==='practice')timerUpdate();
   }
   let toastTimeout;
@@ -174,6 +181,7 @@
   function setTheme(){document.documentElement.dataset.theme=state.theme==='dark'?'dark':'light';const b=document.getElementById('theme-switch');if(b)b.innerHTML=icon(state.theme==='dark'?'sun':'moon');}
 
   document.addEventListener('click',event=>{
+    const jump=event.target.closest('[data-jump]');if(jump){event.preventDefault();document.getElementById('day-'+jump.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'});return;}
     const week=event.target.closest('[data-week]');
     if(week){const num=Number(week.dataset.week);location.hash=`#plan?week=${num}`;if(ui.week===num&&routeInfo().route==='plan')render(false);return;}
     const note=event.target.closest('[data-notes-toggle]');
@@ -187,12 +195,16 @@
       case 'flash-reveal':ui.reveal=!ui.reveal;rerenderKeepPosition();break;
       case 'flash-next':ui.phrase=(ui.phrase+1)%DATA.phrases.length;ui.reveal=false;rerenderKeepPosition();break;
       case 'flash-learn':{const arr=new Set(state.learned);arr.has(ui.phrase)?arr.delete(ui.phrase):arr.add(ui.phrase);state.learned=[...arr];persist();rerenderKeepPosition();break;}
+      case 'csv':exportCSV();break;
       case 'export':exportBackup();break;
       case 'import':document.getElementById('restore-input').click();break;
       case 'erase':if(confirm('Сбросить весь локальный прогресс, заметки и оценки? Перед этим рекомендуется скачать резервную копию.')){state=structuredClone(DEFAULT);persist();toast('Локальный прогресс сброшен');rerenderKeepPosition();}break;
     }
   });
   document.addEventListener('change',event=>{
+    if(event.target.matches('select[data-report-week]')){ui.reportWeek=event.target.value;rerenderKeepPosition();return;}
+    if(event.target.matches('input[data-minutes]')){const el=event.target,id=el.dataset.minutes;if(DATA.tasks.some(t=>t.id===id)){const n=Number(el.value);if(el.value===''||!Number.isFinite(n)||n<0||n>999)delete state.minutes[id];else state.minutes[id]=Math.floor(n);persist();}return;}
+
     const el=event.target;
     if(el.matches('input[data-task][data-step]')){
       const id=el.dataset.task,step=el.dataset.step;
@@ -207,23 +219,26 @@
     }
   });
   document.addEventListener('input',event=>{
+    if(event.target.matches('input[data-error]')){const id=event.target.dataset.error;if(DATA.tasks.some(t=>t.id===id)){state.errors[id]=event.target.value.slice(0,240);persist();}return;}
     if(event.target.matches('textarea[data-note]')){const id=event.target.dataset.note;if(DATA.tasks.some(t=>t.id===id)){state.notes[id]=event.target.value.slice(0,3000);persist();}}
   });
   function updateScoreResult(){const box=document.getElementById('score-result');if(box)box.innerHTML=scoreResultHTML();}
-  function exportBackup(){const payload={app:'Goethe B2 Learning Studio',exportedAt:new Date().toISOString(),data:state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`goethe-b2-progress-${todayBerlin()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Резервная копия сохранена');}
+  function exportBackup(){const payload={app:'telc B2 Beruf Lernstudio',exportedAt:new Date().toISOString(),data:state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`telc-b2-progress-${todayBerlin()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Резервная копия сохранена');}
   document.getElementById('restore-input').addEventListener('change',async event=>{
     const file=event.target.files?.[0];event.target.value='';if(!file)return;
     if(file.size>1024*1024){toast('JSON слишком большой (максимум 1 МБ)');return;}
     try{
-      const doc=JSON.parse(await file.text());if(doc?.app!=='Goethe B2 Learning Studio'||doc.data?.version!==1)throw Error('Неподходящий файл');
+      const doc=JSON.parse(await file.text());if(!['telc B2 Beruf Lernstudio','Goethe B2 Learning Studio'].includes(doc?.app)||doc.data?.version!==1)throw Error('Неподходящий файл');
       const v=doc.data;
       const allowed=new Set(DATA.tasks.map(t=>t.id));
       const tasks=Object.fromEntries(Object.entries(v.tasks||{}).filter(([id,x])=>allowed.has(id)&&x&&typeof x==='object').map(([id,x])=>[id,{done:!!x.done,checked:!!x.checked,repeated:!!x.repeated}]));
       const notes=Object.fromEntries(Object.entries(v.notes||{}).filter(([id,x])=>allowed.has(id)&&typeof x==='string').map(([id,x])=>[id,x.slice(0,3000)]));
       const scores=Object.fromEntries(Object.entries(v.scores||{}).filter(([k,x])=>['lesen','hoeren','schreiben','sprechen'].includes(k)&&Number.isFinite(Number(x))&&Number(x)>=0&&Number(x)<=60).map(([k,x])=>[k,Number(x)]));
+      const minutes=Object.fromEntries(Object.entries(v.minutes||{}).filter(([id,n])=>allowed.has(id)&&Number.isFinite(Number(n))&&Number(n)>=0&&Number(n)<=999).map(([id,n])=>[id,Math.floor(Number(n))]));
+      const errors=Object.fromEntries(Object.entries(v.errors||{}).filter(([id,x])=>allowed.has(id)&&typeof x==='string').map(([id,x])=>[id,x.slice(0,240)]));
       const learned=Array.isArray(v.learned)?v.learned.filter(n=>Number.isInteger(n)&&n>=0&&n<DATA.phrases.length):[];
       if(!confirm('Заменить текущие локальные данные содержимым резервной копии?'))return;
-      state={...structuredClone(DEFAULT),tasks,notes,scores,learned,theme:state.theme};persist();setTheme();rerenderKeepPosition();toast('Прогресс восстановлен');
+      state={...structuredClone(DEFAULT),tasks,notes,minutes,errors,scores,learned,theme:state.theme};persist();setTheme();rerenderKeepPosition();toast('Прогресс восстановлен');
     }catch(err){toast('Не удалось прочитать резервную копию JSON');console.warn('Backup import error',err.message);}
   });
   document.getElementById('theme-switch').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';persist();setTheme();});
