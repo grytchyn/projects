@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
- <rect width="96" height="96" rx="24" fill="#145d50"/>
- <path d="M64 29a28 28 0 1 0 4 31H49V47h34v5c0 23-14 37-35 37S10 72 10 48s17-41 41-41c13 0 24 5 31 13L70 31a26 26 0 0 0-6-2Z" fill="#fff" opacity=".96"/>
- <circle cx="80" cy="76" r="8" fill="#98f5bd"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="telc B2"><rect width="96" height="96" rx="24" fill="#145d50"/><text x="48" y="62" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="46" text-anchor="middle" fill="white">B2</text><circle cx="80" cy="76" r="7" fill="#98f5bd"/></svg>
