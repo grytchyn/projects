@@ -50,12 +50,12 @@
   function daysLeft() { return daysBetween(todayBerlin(), DATA.examDate); }
   function chooseCurrentWeek() {
     const now=todayBerlin();
-    return DATA.weeks.find(w=>w.start<=now && w.end>=now)?.id || (now<DATA.weeks[0].start?1:now>DATA.weeks[4].end?5:DATA.weeks.find(w=>w.start>=now)?.id||1);
+    return DATA.weeks.find(w=>w.start<=now && w.end>=now)?.id || (now<DATA.weeks[0].start?1:now>DATA.examDate?5:DATA.weeks.find(w=>w.start>=now)?.id||1);
   }
   function tstate(id) { return state.tasks[id] && typeof state.tasks[id] === 'object' ? state.tasks[id] : {}; }
   function taskDone(id) { return !!tstate(id).done; }
   function taskStats(week) {
-    const arr=week?DATA.tasks.filter(t=>t.week===week):DATA.tasks;
+    const arr=DATA.tasks.filter(t=>(week?t.week===week:true) && (week===5 || t.id<DATA.examDate));
     const done=arr.filter(t=>taskDone(t.id)).length;
     return { total:arr.length, done, percent:arr.length?Math.round(done/arr.length*100):0 };
   }
@@ -68,13 +68,13 @@
   }
   function nextTask() {
     const now=todayBerlin();
-    return DATA.tasks.find(t=>t.id>=now&&!taskDone(t.id)) || DATA.tasks.find(t=>!taskDone(t.id)) || null;
+    return DATA.tasks.find(t=>t.id>=now&&t.id<DATA.examDate&&!taskDone(t.id)) || DATA.tasks.find(t=>t.id<DATA.examDate&&!taskDone(t.id)) || null;
   }
 
   function renderHome() {
     const stats=taskStats();const left=daysLeft();const t=nextTask();
     const title=left>0?`До экзамена ${left} ${plural(left,'день','дня','дней')}`:left===0?'Сегодня экзамен B2':'Экзамен по плану уже прошёл';
-    const subtitle=left>0?'21 декабря 2026 · Berlitz. Фокус на Schreiben и Sprechen.':'Вся подготовка и записи остаются доступны.';
+    const subtitle=left>0?'Пятница, 11 декабря 2026 · Berlitz. Фокус на Schreiben и Sprechen.':'Вся подготовка и записи остаются доступны.';
     const next=t?`<article class="task-compact"><div class="task-compact-heading"><span class="badge">${t.id===todayBerlin()?'СЕГОДНЯ':t.id>todayBerlin()?'СЛЕДУЮЩЕЕ ЗАДАНИЕ':'НЕЗАВЕРШЕНО'}</span><span class="badge badge-neutral">${shortDate(t.id)}</span></div><h3>${e(t.title)}</h3><p>${e(t.detail)}</p><div class="task-actions"><a href="#plan?week=${t.week}&task=${t.id}" class="btn btn-sm">${icon('calendar')} К заданию</a><a href="#week?num=${t.week}&day=${t.id}" class="btn btn-quiet btn-sm">Текст задания</a></div></article>`
       :`<article class="task-compact"><span class="badge">ВСЕ ЗАДАНИЯ ОТМЕЧЕНЫ</span><h3>33 из 33 ✓</h3><p>Теперь можно повторять слабые темы и проверять результат пробниками.</p></article>`;
     const quick = [
@@ -85,9 +85,9 @@
     ].map(([ic,name,desc,url])=>`<a class="quick-card" href="${url}" ${url.startsWith("#")?"":'target="_blank" rel="noopener noreferrer"'}><div class="quick-head">${icon(ic,'icon-lg')}${icon('arrow','icon-xs')}</div><strong>${name}</strong><span>${desc}</span></a>`).join('');
     const perWeek=DATA.weeks.map(w=>{const m=taskStats(w.id);return `<div class="week-mini-row"><strong>${String(w.id).padStart(2,'0')}</strong>${progressBar(m.percent)}<span>${m.done}/${m.total}</span></div>`}).join('');
     return `${header('ЛИЧНЫЙ КАБИНЕТ','Guten Tag, Настя.','Меньше поиска, больше практики. Все задания и материалы — в одном месте.')}
-      <section class="hero" aria-labelledby="hero-title"><div><div class="hero-label">ТВОЙ ЭКЗАМЕН · telc B2 Beruf</div><h2 id="hero-title">${title}</h2><p>${subtitle}</p><div class="hero-actions"><a href="#plan" class="btn">${icon('calendar')} План на сегодня</a><a href="#practice" class="btn btn-hero-quiet">${icon('clock')} Начать тренировку</a></div></div><div class="countdown" aria-label="${Math.max(left,0)} календарных дней до экзамена" style="background:conic-gradient(#b6e7ca ${Math.min(100,Math.max(0,Math.round((34-Math.max(0,left))/34*100)))}%,rgba(255,255,255,.15) 0)"><div class="countdown-inner"><span class="countdown-num">${Math.max(left,0)}</span><span class="countdown-caption">дней</span></div></div></section>
-      <div class="home-grid"><div class="stack"><section class="panel panel-pad">${sectionHead('Твоя следующая тренировка','<a class="text-link" href="#plan">Все 33 дня →</a>')}${next}</section>
-      <section class="panel panel-pad">${sectionHead('Маршрут из пяти недель','<a class="text-link" href="#plan">Открыть план →</a>')}<div class="progress-line"><div class="small-ring" style="background:conic-gradient(var(--accent) ${stats.percent}%,var(--panel-soft) 0)"><span>${stats.percent}%</span></div><div><strong style="font-size:15px">${stats.done} из ${stats.total} заданий</strong><p style="font-size:12px;color:var(--muted);margin:5px 0">Отмечено как «сделано». Проверка и повтор считаются отдельно.</p></div></div><div class="week-mini">${perWeek}</div></section></div>
+      <section class="hero" aria-labelledby="hero-title"><div><div class="hero-label">ТВОЙ ЭКЗАМЕН · telc B2 Beruf</div><h2 id="hero-title">${title}</h2><p>${subtitle}</p><div class="hero-actions"><a href="#plan" class="btn">${icon('calendar')} План на сегодня</a><a href="#practice" class="btn btn-hero-quiet">${icon('clock')} Начать тренировку</a></div></div><div class="countdown" aria-label="${Math.max(left,0)} календарных дней до экзамена" style="background:conic-gradient(#b6e7ca ${Math.min(100,Math.max(0,Math.round((24-Math.max(0,left))/24*100)))}%,rgba(255,255,255,.15) 0)"><div class="countdown-inner"><span class="countdown-num">${Math.max(left,0)}</span><span class="countdown-caption">дней</span></div></div></section>
+      <div class="home-grid"><div class="stack"><section class="panel panel-pad">${sectionHead('Твоя следующая тренировка','<a class="text-link" href="#plan">План до экзамена →</a>')}${next}</section>
+      <section class="panel panel-pad">${sectionHead('Маршрут до 11 декабря','<a class="text-link" href="#plan">Открыть план →</a>')}<div class="progress-line"><div class="small-ring" style="background:conic-gradient(var(--accent) ${stats.percent}%,var(--panel-soft) 0)"><span>${stats.percent}%</span></div><div><strong style="font-size:15px">${stats.done} из ${stats.total} заданий</strong><p style="font-size:12px;color:var(--muted);margin:5px 0">Отмечено как «сделано». Проверка и повтор считаются отдельно.</p></div></div><div class="week-mini">${perWeek}</div></section></div>
       <div class="stack"><section class="panel panel-pad">${sectionHead('Открыть и учиться')}<div class="quick-grid">${quick}</div></section>
       <section class="panel panel-pad">${sectionHead('Одна привычка сегодня')}<p class="section-note" style="font-size:13px;line-height:1.65;margin:0 0 16px">Напиши собственный ответ, проверь все пункты задания и повтори исправленный вариант через 1–2 дня. Для Sprechen — запись голоса и вопрос партнёру.</p><a href="#practice" class="text-link">Таймер и Redemittel ${icon('chevron','icon-xs')}</a></section></div></div>`;
   }
@@ -105,7 +105,7 @@
   function renderPlan() {
     const w=DATA.weeks[ui.week-1],tasks=DATA.tasks.filter(t=>t.week===ui.week),m=taskStats(ui.week);
     const menu=DATA.weeks.map(x=>`<button class="week-tab ${ui.week===x.id?'active':''}" data-week="${x.id}" aria-pressed="${ui.week===x.id}">${String(x.id).padStart(2,'0')} · ${e(x.short)}</button>`).join('');
-    return `${header('33 ДНЯ · 5 ЭТАПОВ','План обучения','Выбирай неделю, выполняй задания с таймером и отмечай этапы. Все пункты взяты из вашей таблицы Google Sheets.','<a class="btn btn-secondary" href="#progress">Журнал на сайте</a>')}
+    return `${header('ДО 11 ДЕКАБРЯ · АРХИВ СОХРАНЁН','План обучения','Основная подготовка заканчивается 10 декабря. Экзамен в пятницу 11 декабря. Пятый этап — архив.','<a class="btn btn-secondary" href="#progress">Журнал на сайте</a>')}
       <div class="week-picker" role="group" aria-label="Выбрать неделю">${menu}</div>
       <section class="panel panel-pad"><div class="week-summary"><div><span class="badge">НЕДЕЛЯ ${w.id}</span><h2 style="font-size:22px;letter-spacing:-.03em;margin:10px 0 3px">${e(w.focus)}</h2><p>${e(w.label)} · ${e(w.goal)}</p></div><div class="week-progress"><div style="display:flex;justify-content:space-between;font-size:12px;margin:0 0 9px"><strong>Выполнено</strong><span>${m.done} / ${m.total}</span></div>${progressBar(m.percent)}</div></div><div class="task-list">${tasks.map(renderTask).join('')}</div><aside class="checkpoint"><strong>${icon('check','icon-xs')} Чекпоинт недели</strong><p>${e(w.checkpoint)}</p><a class="btn btn-secondary btn-sm" href="#week?num=${w.id}">Полный план на сайте →</a></aside></section>`;
   }
@@ -143,7 +143,7 @@
     const parts=[['lesen','Lesen'],['hoeren','Hören'],['schreiben','Schreiben'],['sprechen','Sprechen']];
     const inp=parts.map(([id,name])=>`<label><span class="score-label">${name}<small>Было: ${DATA.baseline[id]}/60</small></span><input class="score-input" type="number" data-score="${id}" min="0" max="60" step="0.5" inputmode="decimal" placeholder="__/60" value="${Number.isFinite(Number(state.scores[id]))&&state.scores[id]!==''&&state.scores[id]!=null?e(state.scores[id]):''}"></label>`).join('');
     return `${header('ДАННЫЕ В ЭТОМ БРАУЗЕРЕ','Мой прогресс','Чек-листы и оценки сохраняются автоматически. Перед очисткой браузера сделай резервную копию.',ext(DATA.links.tracking,'Google Sheets'))}
-    <div class="stats-grid"><div class="stat"><span class="big">${st.done}<span style="font-size:15px;color:var(--muted)"> / 33</span></span><span class="label">Заданий выполнено</span></div><div class="stat"><span class="big">${reviewed}</span><span class="label">Проверены</span></div><div class="stat"><span class="big">${repeated}</span><span class="label">Повторены</span></div></div>
+    <div class="stats-grid"><div class="stat"><span class="big">${st.done}<span style="font-size:15px;color:var(--muted)"> / ${st.total}</span></span><span class="label">Заданий выполнено</span></div><div class="stat"><span class="big">${reviewed}</span><span class="label">Проверены</span></div><div class="stat"><span class="big">${repeated}</span><span class="label">Повторены</span></div></div>
     <div class="progress-layout"><div class="stack"><section class="panel panel-pad">${sectionHead('Прогресс по неделям')}<div>${w}</div><a class="text-link" href="#plan">Перейти к заданиям ${icon('chevron','icon-xs')}</a></section>
     <section class="panel panel-pad">${sectionHead('Баллы пробного экзамена','<span class="badge badge-neutral">Тренировка</span>')}<div class="score-grid">${inp}</div><p class="score-meta">Цель: L ≥42 · H ≥42 · Sch ≥42–45 · Spr ≥45. Предварительная оценка, не официальный результат.</p><div id="score-result">${scoreResultHTML()}</div></section></div>
     <div class="stack"><section class="panel panel-pad">${sectionHead('Резервная копия',`<span class="badge badge-neutral">${icon('shield','icon-xs')} Local-first</span>`)}<p class="section-note" style="line-height:1.7;margin:0 0 15px">Данные не уходят на сервер. Экспортируй JSON после каждой недели, чтобы сохранить отметки и заметки.</p><div class="backup-actions"><button class="btn btn-secondary btn-sm" data-action="export">${icon('download')} Скачать JSON</button><button class="btn btn-quiet btn-sm" data-action="import">${icon('upload')} Восстановить</button></div><p class="backup-note">На другом устройстве прогресс появится только после ручного импорта файла. Google Sheets автоматически не обновляется.</p><div class="danger-zone"><button class="btn btn-danger btn-sm" data-action="erase">Сбросить данные на этом устройстве</button></div></section>
