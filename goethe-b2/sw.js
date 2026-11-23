@@ -1,6 +1,6 @@
 /* Optional offline access for the static study dashboard.
    External Google Docs and LexDeutsch always require a connection. */
-const CACHE_NAME = 'telc-b2-shell-v6';
+const CACHE_NAME = 'telc-b2-shell-v7';
 const SHELL = ['./','./index.html','./styles.css','./data.js','./weeks.js','./extra.js','./app.js','./icon.svg','./icon-192.png','./icon-512.png','./manifest.webmanifest'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
