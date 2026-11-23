@@ -1,9 +1,9 @@
 // Source: the user's B2 Beruf Google Sheets "Aufgabenplan" and "Wochencheck",
 // retrieved on 2026-11-17. Links point to the verified native Google documents.
 window.TELC_B2_DATA = Object.freeze({
-  examDate: '2026-12-21',
+  examDate: '2026-12-11',
   examName: 'telc B2 Beruf',
-  context: 'Berlitz · дата 21 декабря 2026',
+  context: 'Berlitz · пятница, 11 декабря 2026',
   storageKey: 'telc-b2-anastasiia-v1',
   legacyStorageKey: 'goethe-b2-anastasiia-v1', // compatibility with prior progress
   links: {
@@ -26,8 +26,8 @@ window.TELC_B2_DATA = Object.freeze({
     { id: 1, start: '2026-11-18', end: '2026-11-24', label: '18–24 ноября', focus: 'Диагностика и структура', short: 'Диагностика', goal: '4 текста, 5 устных тренировок, ТОП-5 ошибок', checkpoint: '24.11 · Выделить повторяющиеся ошибки', link: 'https://docs.google.com/document/d/1gVYeiTCG_g9HaiQVC61rDRWo1Z_YWMHDX5CtweDLps4/edit' },
     { id: 2, start: '2026-11-25', end: '2026-12-01', label: '25 ноября – 1 декабря', focus: 'Писать точно и по делу', short: 'Schreiben', goal: 'Не пропускать требования задания; уложиться во время', checkpoint: '01.12 · Все пункты раскрыты', link: 'https://docs.google.com/document/d/1NpKnfKhlX_GmAmeGgCdfP1eIamKNHl9-cltQqzfWfQQ/edit' },
     { id: 3, start: '2026-12-02', end: '2026-12-08', label: '2–8 декабря', focus: 'Экзаменационная скорость', short: 'Скорость', goal: 'Незнакомые задания и первый комплексный пробник', checkpoint: '08.12 · Задания без шаблона', link: 'https://docs.google.com/document/d/1VnTeF-l-xujPUSkVcDqABWgJyV3ISyKYhwPB8agCdlc/edit' },
-    { id: 4, start: '2026-12-09', end: '2026-12-15', label: '9–15 декабря', focus: 'Проверка готовности', short: 'Пробники', goal: 'Два контрольных блока, работа над слабостями', checkpoint: '15.12 · Результат с запасом', link: 'https://docs.google.com/document/d/1fsuXpOpS37sdznEceDpHtfmRPMk47QxmnCdU0OT_Up8/edit' },
-    { id: 5, start: '2026-12-16', end: '2026-12-20', label: '16–20 декабря', focus: 'Финальное повторение', short: 'Закрепление', goal: '8 тем Sprechen, исправления, сон и документы', checkpoint: '20.12 · Готовность и отдых', link: 'https://docs.google.com/document/d/10l-QQjFgUHD3D7_ld82bdYxtQ-S4PstmcgYczScVJdY/edit' }
+    { id: 4, start: '2026-12-09', end: '2026-12-11', label: '9–11 декабря', focus: 'Финиш и экзамен', short: 'Финиш', goal: '09.12: письмо; 10.12: лёгкое повторение, документы; 11.12: экзамен', checkpoint: '11.12 · ПЯТНИЦА · ЭКЗАМЕН', link: 'https://docs.google.com/document/d/1fsuXpOpS37sdznEceDpHtfmRPMk47QxmnCdU0OT_Up8/edit' },
+    { id: 5, start: '2026-12-12', end: '2026-12-20', label: '12–20 декабря · архив', focus: 'Архив старого плана', short: 'Архив', goal: 'Задания после экзамена 11.12: не обязательны для подготовки', checkpoint: '11.12 · экзамен уже состоялся', link: 'https://docs.google.com/document/d/10l-QQjFgUHD3D7_ld82bdYxtQ-S4PstmcgYczScVJdY/edit' }
   ],
   tasks: [
     { id: '2026-11-18', week: 1, kind: 'Schreiben + Sprechen', title: 'Beschwerde: Putzdienst · Gutes Arbeitsumfeld', detail: 'Ответить на жалобу об уборке; записать двухминутную презентацию.', pages: '66, 181', duration: 70, focus: 'Schreiben' },
@@ -52,12 +52,12 @@ window.TELC_B2_DATA = Object.freeze({
     { id: '2026-12-07', week: 3, kind: 'Sprechen + Lesen', title: 'Baustellenlärm · Großraumbüro', detail: 'Два диалога о шуме и упражнение на чтение.', pages: '193, 196', duration: 65, focus: 'Sprechen' },
     { id: '2026-12-08', week: 3, kind: 'Checkpoint', title: 'Незнакомое задание без подсказок', detail: 'Форум и Sprechen Teil 3 на время, сравнить с предыдущими.', pages: 'W3', duration: 70, focus: 'Review' },
     { id: '2026-12-09', week: 4, kind: 'Schreiben', title: 'Beschwerde: Umzug', detail: 'Ответ на жалобу о переезде; строго выполнить Chefauftrag.', pages: '71', duration: 65, focus: 'Schreiben' },
-    { id: '2026-12-10', week: 4, kind: 'Forum + Smalltalk', title: 'Vier-Tage-Woche · Work-Life-Balance', detail: 'Четырёхдневная неделя и компромисс для коллег.', pages: '103', duration: 65, focus: 'Schreiben' },
-    { id: '2026-12-11', week: 4, kind: 'Schreiben', title: 'Beschwerde: Webseite', detail: 'Исправить ошибку агентства, не обещать бесплатные новые услуги.', pages: '69', duration: 65, focus: 'Schreiben' },
-    { id: '2026-12-12', week: 4, kind: 'Sprechen', title: 'Berufliches Vorbild · Arbeitssuche · Pünktlichkeit', detail: 'Презентации и решение проблемы опозданий коллеги.', pages: '181, 195', duration: 60, focus: 'Sprechen' },
-    { id: '2026-12-13', week: 4, kind: 'Forum + Notiz', title: 'Zusätzliche Aufgaben · Tischreservierung', detail: 'Форум о нагрузке и телефонная заметка.', pages: '98, 208', duration: 65, focus: 'Schreiben' },
-    { id: '2026-12-14', week: 4, kind: 'Full Simulation', title: 'Полный пробный telc + Sprechen', detail: 'Максимально приближённый к экзамену новый тест.', pages: 'telc', duration: 140, focus: 'Probe' },
-    { id: '2026-12-15', week: 4, kind: 'Checkpoint', title: 'Разбор ошибок · Kühlraum', detail: 'Исправить письма, решить устную ситуацию с холодильной камерой.', pages: '197', duration: 75, focus: 'Review' },
+    { id: '2026-12-10', week: 4, kind: 'Лёгкое повторение', title: 'Последний день подготовки', detail: 'До 30 минут: Redemittel, типичные ошибки, короткая репетиция. Проверить Einladung, маршрут, документы, сон. Без полного пробника.', pages: 'список ошибок', duration: 30, focus: 'Review' },
+    { id: '2026-12-11', week: 4, kind: 'Экзамен', title: 'Пятница, 11 декабря · B2 Beruf', detail: 'Экзамен в Berlitz. Точное время и место сверить по Einladung. Не учить новые темы.', pages: 'Einladung', duration: 0, focus: 'Exam' },
+    { id: '2026-12-12', week: 5, kind: 'Sprechen', title: 'Berufliches Vorbild · Arbeitssuche · Pünktlichkeit', detail: 'Презентации и решение проблемы опозданий коллеги.', pages: '181, 195', duration: 60, focus: 'Sprechen' },
+    { id: '2026-12-13', week: 5, kind: 'Forum + Notiz', title: 'Zusätzliche Aufgaben · Tischreservierung', detail: 'Форум о нагрузке и телефонная заметка.', pages: '98, 208', duration: 65, focus: 'Schreiben' },
+    { id: '2026-12-14', week: 5, kind: 'Full Simulation', title: 'Полный пробный telc + Sprechen', detail: 'Максимально приближённый к экзамену новый тест.', pages: 'telc', duration: 140, focus: 'Probe' },
+    { id: '2026-12-15', week: 5, kind: 'Checkpoint', title: 'Разбор ошибок · Kühlraum', detail: 'Исправить письма, решить устную ситуацию с холодильной камерой.', pages: '197', duration: 75, focus: 'Review' },
     { id: '2026-12-16', week: 5, kind: 'Schreiben', title: 'Beschwerde: Pflanzenlieferung', detail: 'Ответить на жалобу по поставке растений.', pages: '77', duration: 55, focus: 'Schreiben' },
     { id: '2026-12-17', week: 5, kind: 'Forum + Sprechen', title: 'Fitnessstudio · Dienstleistung', detail: 'Обсудить спортивный абонемент и презентовать услугу.', pages: '99, 181', duration: 55, focus: 'Schreiben' },
     { id: '2026-12-18', week: 5, kind: 'Schreiben + Notiz', title: 'Mangelhafte Lieferung · Telefonnotiz', detail: 'Последний письменный тренинг и заметка.', pages: '76, 207', duration: 55, focus: 'Schreiben' },
