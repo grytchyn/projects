@@ -62,3 +62,5 @@
 @media(max-width:360px){.exam-time{font-size:9px}.exam-card summary{gap:7px}.exam-card-title small{font-size:9.5px}}
 
 @media(max-width:730px){.bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr))}.bottom-nav a{font-size:9px}.bottom-nav .ico{width:18px;height:18px}}
+
+.exam-subtasks{margin:0 0 19px}.exam-subtasks>strong{font-size:13px;display:block;margin:0 0 11px}.exam-subtasks ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.exam-subtasks li{display:flex;flex-direction:column;gap:7px;padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--panel-soft)}.exam-subtasks li strong{color:var(--accent);font-size:11px}.exam-subtasks li span{color:var(--ink);font-size:12px;line-height:1.6}@media(max-width:620px){.exam-subtasks ul{grid-template-columns:1fr}}
