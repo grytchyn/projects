@@ -60,3 +60,5 @@
 .exam-preview-cta{padding:16px}
 }
 @media(max-width:360px){.exam-time{font-size:9px}.exam-card summary{gap:7px}.exam-card-title small{font-size:9.5px}}
+
+@media(max-width:730px){.bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr))}.bottom-nav a{font-size:9px}.bottom-nav .ico{width:18px;height:18px}}
