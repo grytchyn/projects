@@ -1,0 +1,62 @@
+
+/* Telc DTB B2 exam map — responsive, accessible, dependency-free. */
+.exam-intro{margin-bottom:19px;background:linear-gradient(125deg,var(--panel),var(--accent-soft));border:1px solid var(--border)}
+.exam-intro .eyebrow{letter-spacing:.075em}
+.exam-intro h2{font-size:clamp(22px,2.8vw,31px);line-height:1.2;letter-spacing:-.04em;margin:12px 0}
+.exam-intro>p{color:var(--muted);line-height:1.75;max-width:730px;font-size:13px;margin:0 0 17px}
+.exam-intro>p strong{color:var(--ink)}
+.exam-cycle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.exam-cycle>div{display:flex;flex-direction:column;gap:5px;padding:14px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}
+.exam-cycle span{font-size:23px}.exam-cycle b{font-size:13px;color:var(--ink)}.exam-cycle small{font-size:11px;color:var(--muted)}
+.exam-jumps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 22px}
+.exam-jump{min-height:109px;display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:15px;border:1px solid var(--border);background:var(--panel);border-radius:16px;text-decoration:none;color:var(--ink);transition:transform .18s,background .18s,border-color .18s}
+.exam-jump>span{font-size:24px}.exam-jump strong{font-size:13px;line-height:1.25}.exam-jump small{font-size:11px;color:var(--muted)}
+.exam-jump:hover,.exam-jump:focus-visible{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-1px)}
+.exam-list{display:grid;gap:12px;margin-bottom:18px}
+.exam-card{overflow:hidden;scroll-margin-top:75px}
+.exam-card summary{display:flex;align-items:center;gap:16px;list-style:none;cursor:pointer;padding:19px 22px;min-height:84px}
+.exam-card summary::-webkit-details-marker{display:none}
+.exam-card summary:focus-visible{outline:3px solid var(--accent);outline-offset:-4px}
+.exam-card[open] summary{border-bottom:1px solid var(--border);background:var(--panel-soft)}
+.exam-emoji{font-size:29px;flex:0 0 40px;text-align:center}
+.exam-card-title{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}
+.exam-card-title strong{font-size:17px;letter-spacing:-.02em;line-height:1.25}
+.exam-card-title small{font-size:12px;color:var(--muted);line-height:1.45}
+.exam-time{white-space:nowrap;border-radius:999px;padding:7px 11px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:800}
+.exam-plus{font-size:22px;font-weight:400;color:var(--accent);width:18px;text-align:center;transition:transform .18s}
+.exam-card[open] .exam-plus{transform:rotate(45deg)}
+.exam-inside{padding:20px 22px 22px}
+.exam-objective{padding:15px 17px;background:var(--accent-soft);border-radius:14px;margin:0 0 21px;font-size:13px;line-height:1.75}
+.exam-inside h3{font-size:15px;margin:0 0 15px;letter-spacing:-.015em}
+.exam-steps{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:13px}
+.exam-steps li{display:flex;align-items:flex-start;gap:11px;font-size:13px;line-height:1.65;color:var(--ink)}
+.exam-number{display:grid;place-items:center;flex:0 0 25px;height:25px;border-radius:8px;color:var(--accent);background:var(--accent-soft);font-weight:800;font-size:12px}
+.exam-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.exam-pitfall,.exam-phrase{display:flex;flex-direction:column;gap:7px;border-radius:14px;padding:16px;background:var(--panel-soft);border:1px solid var(--border);line-height:1.65}
+.exam-pitfall{border-left:3px solid #d69e46}
+.exam-pitfall strong,.exam-phrase strong{font-size:12px}
+.exam-pitfall small,.exam-phrase small{font-size:12px;color:var(--muted)}
+.exam-phrase p{font-size:13px;font-weight:700;margin:0;color:var(--ink)}
+.exam-drill,.exam-speech{padding:15px 17px;border-radius:14px;border:1px dashed var(--accent);background:var(--accent-soft);margin:0 0 14px}
+.exam-drill strong,.exam-speech strong{font-size:12px;color:var(--accent)}
+.exam-drill p,.exam-speech p{line-height:1.75;font-size:12.5px;margin:8px 0 0;color:var(--ink)}
+.exam-actions{display:flex;gap:9px;flex-wrap:wrap}
+.exam-actions .btn{min-height:39px}
+.exam-sources h3{font-size:16px;margin:0 0 10px}.exam-sources p{font-size:12px;line-height:1.85;color:var(--muted)}
+.exam-sources a{font-size:12px;font-weight:720;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.exam-preview-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 24px;margin:0 0 18px;background:var(--accent-soft);border:1px solid var(--border);border-radius:18px}
+.exam-preview-cta strong{font-size:15px}.exam-preview-cta p{color:var(--muted);font-size:12px;margin:6px 0 0;line-height:1.5}
+@media(max-width:730px){
+.exam-cycle{grid-template-columns:repeat(2,minmax(0,1fr))}
+.exam-jumps{grid-template-columns:repeat(2,minmax(0,1fr))}
+.exam-card summary{gap:10px;padding:15px 13px;min-height:79px}
+.exam-emoji{flex-basis:29px;font-size:24px}
+.exam-card-title strong{font-size:14px}.exam-card-title small{font-size:10px}
+.exam-time{font-size:10px;padding:6px 8px}
+.exam-inside{padding:15px}
+.exam-two{grid-template-columns:1fr}
+.exam-jump{min-height:101px;padding:13px}
+.exam-steps li{font-size:12px}
+.exam-preview-cta{padding:16px}
+}
+@media(max-width:360px){.exam-time{font-size:9px}.exam-card summary{gap:7px}.exam-card-title small{font-size:9.5px}}
